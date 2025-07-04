@@ -1,0 +1,37 @@
+
+[cursor]
+blink_interval = 750
+vi_mode_style = "Beam"
+
+[cursor.style]
+blinking = "Always"
+shape = "Beam"
+
+[font]
+size = 16.0
+
+[font.normal]
+family = "mono"
+
+[font.offset]
+x = 0
+y = 2
+
+[mouse]
+hide_when_typing = false
+
+[scrolling]
+history = 10000
+
+[window]
+decorations = "full"
+dynamic_title = true
+opacity = 0.86
+
+
+[window.padding]
+x = 2
+y = 2
+
+[general]
+import = ["/home/clay/.config/alacritty/themes/snazzy.toml"]
