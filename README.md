@@ -11,214 +11,202 @@
 
 过去用过很多的窗口管理器,bspwm,i3,awesome,dwm,使用时间最长的是awesomewm,其次是dwm,最后尝试了一周左右的Hyprland之后就决定以后就是他了,
 
-
-
 我对Hyprland的评价是: **Hyprland,满足你对窗口管理器的所有期待**
+
+
+
+
+
+**目录结构**
+
+
+
+
+```bash
+## 完整目录结构说明
+.
+├── .config/                  # 用户应用程序配置
+│   ├── alacritty             # 终端模拟器配置
+│   ├── cava                  # 音频频谱可视化配置
+│   ├── dunst                 # 桌面通知系统配置
+│   ├── fcitx5                # 输入法框架配置
+│   ├── hypr                  # Hyprland 窗口管理器配置
+│   ├── nicoulaj.zsh-theme    # Zsh 主题文件
+│   ├── nvim                  # Neovim 编辑器配置
+│   ├── rofi                  # 应用启动器配置
+│   ├── waybar                # 状态栏工具配置
+│   └── yazi                  # 终端文件管理器配置
+├── etc/                      # 系统级配置文件
+│   ├── environment           # 全局环境变量设置
+│   ├── fonts/                # 系统字体配置
+│   ├── pacman.conf           # pacman 包管理器优化配置
+│   ├── usr/                  # 用户级系统配置
+│   └── vconsole.conf         # 虚拟控制台配置
+├── grub/                     # GRUB 启动管理器主题
+│   ├── dejavu_32.pf2         # 32px DejaVu 字体
+│   ├── dejavu_sans_12.pf2    # 12px DejaVu Sans 字体
+│   ├── dejavu_sans_14.pf2    # 14px DejaVu Sans 字体
+│   ├── dejavu_sans_16.pf2    # 16px DejaVu Sans 字体
+│   ├── dejavu_sans_24.pf2    # 24px DejaVu Sans 字体
+│   ├── dejavu_sans_48.pf2    # 48px DejaVu Sans 字体
+│   ├── moon.jpg              # GRUB 背景星空图
+│   ├── selected_item_c.png   # 选中项指示器图标
+│   ├── terminus-12.pf2       # 12px Terminus 终端字体
+│   ├── terminus-14.pf2       # 14px Terminus 终端字体
+│   ├── terminus-16.pf2       # 16px Terminus 终端字体
+│   ├── terminus-18.pf2       # 18px Terminus 终端字体
+│   └── theme.txt             # GRUB 主题配置文件
+├── .zshrc                    # Zsh 配置文件
+├── archinstall.json          # Archinstall 自动安装配置文件
+├── pkgs.conf                 # 软件包列表配置文件
+├── setup.sh                  # 主安装脚本
+├── actions.sh                # 系统动作脚本
+├── grub_setup.sh             # GRUB 主题安装脚本
+├── zsh_setup.sh              # Zsh 配置安装脚本      
+└── README.md                 # 项目说明文档
+
+```
+
+**.config 目录配置说明**
+
+以下是用户配置文件目录的详细说明：
+
+```bash
+.config/
+├── hypr/               # Hyprland 窗口管理器配置
+│   ├── bg/             # 壁纸存储目录
+│   ├── scripts/        # 自定义脚本目录
+│   │   ├── bg_mp4.sh               # mpvpaper动态壁纸随机切换的脚本
+│   │   ├── bg.sh                   # hyprpaper 随机切换壁纸
+│   │   ├── ip.sh                   # 复制ip地址和IP的C段到剪切板工具
+│   │   ├── reload.sh               # 重新加载hypeland配置
+│   │   ├── screenshot.sh           # 几个工具组合实现的截屏标注
+│   │   ├── starthypr.sh            # 启动hyprland的脚本（内涵很多环境变量）
+│   │   ├── start-vmware.sh         # 启动vmware的脚本
+│   │   ├── toggle-waybar.sh        # waybar动态显示/隐藏
+│   │   └── update_dotfiles.sh      # 更新配置文件到指定文件（可以修改）
+│   ├── exec.conf       # 自启动应用配置
+│   ├── hypridle.conf   # 空闲行为配置
+│   ├── hyprland.conf   # 核心配置文件
+│   ├── hyprlock.conf   # 锁屏界面配置
+│   ├── hyprpaper.conf  # 壁纸管理配置
+│   ├── keybinds.conf   # 快捷键绑定
+│   ├── plugins.conf    # 插件配置
+│   └── rules.conf      # 窗口规则配置
+├── rofi/               # 应用启动器配置
+├── waybar/             # 状态栏配置
+├── alacritty/          # 终端模拟器配置
+├── cava/               # 音频可视化配置
+├── dunst/              # 通知系统配置
+├── fcitx5/             # 输入法配置
+├── yazi/               # 文件管理器配置
+├── nvim/               # Neovim 编辑器配置
+└── nicoulaj.zsh-theme  # Zsh 自定义主题文件
+```
+
 
 # Usage
 
-
-
-**目录**
-
+### 完整安装
 ```bash
-.
-├── .config         # 配置文件
-│   ├── alacritty   # alacritty终端配置
-│   ├── dunst       # 桌面通知 配置
-│   ├── hypr        # Hyprland 配置
-│   ├── rofi        # rofi配置
-│   └── waybar      # 状态栏配置
-├── install.sh      # 安装packages脚本
-├── zsh.sh          # zsh初始化脚本(包含安装插件)
-└── README.md
+# 1. 克隆仓库
+git clone https://github.com/hon-ke/dotfiles.git
+cd dotfiles
+
+# 2. 运行主安装脚本
+sudo ./setup.sh
 ```
 
-**hypr目录**
+#### 分步安装
 ```bash
+# 安装基础软件包
+# 需要先把setup.sh下的如下几行注释掉
+# sh zsh_setup.sh
+# sh grub_setup.sh
+# sh actions.sh
 
-.config/hypr
-├── scripts
-│   └── toggle-waybar.sh    # 手动开关状态栏的脚本
-├── bg                      # 存壁纸的,为了防止配置文件太大,只放了两个
-│   ├── bg.jpg
-│   └── queen_medusa.jpg
-├── exec.conf               # 启动hyprland时自动启动的应用,如输入法,bg,waybar等
-├── hyprland.conf           # hyprland 主配置文件
-├── keybinds.conf           # 快捷键绑定
-└── starthypr.sh            # 直接从终端启动hyprland的脚本,也可以使用sddm不用这个
+sudo ./setup.sh
+
+# 配置 Zsh
+sudo ./zsh_setup.sh
+
+# 配置 GRUB 主题
+sudo ./grub_setup.sh
+
+# 执行系统动作，最后执行整个
+sudo ./actions.sh
+
 ```
-
-
 # Keymap(快捷键绑定)
 
-
-
-
-| 快捷键                      | 功能                            | 备注    |
-|---------------------------|---------------------------------|---------|
-| $mainMod + Enter         | 打开终端 (alacritty)           |         |
-| $mainMod + Q             | 关闭当前窗口                    |         |
-| $mainMod + E             | 打开文件管理器                  |         |
-| $mainMod + 空格          | 切换当前窗口的浮动状态          |         |
-| $mainMod + F         | 全屏当前窗口 fullscreen |         |
-| $mainMod + C             | 打开 Google Chrome 浏览器      |         |
-| $mainMod + V             | 打开 VMware 虚拟机              |         |
-| $mainMod + D             | 打开 应用菜单(rofi) |         |
-| $mainMod + P             | 切换 dwindle 窗口(个人不怎么使用这个功能,感觉没啥用) |         |
-| $mainMod + B             | 执行 toggle-waybar.sh 脚本(打开关闭waybar) |         |
-| $mainMod + J             | 切换当前窗口的拆分方式（水平<=>垂直,多个窗口才有效,比较少用） |       |
-| $mainMod + SHIFT + B     | 使用 swaybg 更换背景             |         |
-| $mainMod + SHIFT + Q     | 退出 hyprland                    |         |
-| $mainMod + CONTROL + SHIFT + D | 锁屏                          |         |
-| $mainMod + CONTROL + SHIFT + S | 关机                          |         |
-| $mainMod + CONTROL + SHIFT + R | 重启                          |         |
-| $mainMod + XF86MonBrightnessUp | 增加屏幕亮度(F7 笔记本增加亮度图标的那个) |         |
-| $mainMod + XF86MonBrightnessDown | 减少屏幕亮度(F6 笔记本减少亮度图标的那个) |         |
-| $mainMod + XF86AudioRaiseVolume | 提高音量(F3 笔记本减少亮度图标的那个)   |         |
-| $mainMod + XF86AudioLowerVolume | 降低音量(F2 笔记本减少亮度图标的那个)   |         |
-| $mainMod + XF86AudioMicMute | 麦克风静音/取消静音 |         |
-| $mainMod + XF86AudioMute    | 静音/取消静音(F1 笔记本减少亮度图标的那个) |         |
-| $mainMod + XF86AudioPlay / XF86AudioPause | 播放/暂停媒体(F4 笔记本减少亮度图标的那个) |         |
-| $mainMod + XF86AudioNext   | 播放下一曲    |         |
-| $mainMod + XF86AudioPrev   | 播放上一曲    |         |
-| $mainMod + 方向键           | 在窗口间移动焦点               |         |
-| $mainMod + [1-9]           | 切换到对应的工作区               |         |
-| $mainMod + SHIFT + [1-9]   | 将当前窗口移动到对应的工作区     |         |
-| $mainMod + 0               | 切换到第10个工作区               |         |
-| $mainMod + SHIFT + 0       | 将当前窗口移动到第10个工作区     |         |
-| $mainMod + S               | 切换 scratchpad 工作区           |         |
-| $mainMod + SHIFT + S       | 将当前窗口移动到 scratchpad 工作区 |       |
-| $mainMod + 滚动方向        | 浏览现有的工作区                 |         |
-| $mainMod + 拖动鼠标左右键 | 通过拖动来移动/调整窗口大小      |         |
-| $mainMod + SHIFT + 方向键 | 在指定方向上调整当前窗口的大小   |         |
-
-
-
-# Packages(安装包列表)
-
-关于每个安装包的作用:
-### 1. 基础工具
-| 包名 | 作用                       | 备注 |
-| ---- | -------------------------- | ---- |
-| paru | AUR 辅助工具               |      |
-| zsh  | 挂载移动存储设备的工具     |      |
-| git  | 管理网络连接的系统托盘图标 |      |
-
-
-
-
-### 2. 字体
-| 包名                            | 作用                                                         | 备注 |
-| ------------------------------- | ------------------------------------------------------------ | ---- |
-| wqy-zenhei                      | 文泉译正黑，一个优秀的中文字体**非常好看的中文字体,显示中文时使用** |      |
-| adobe-source-han-serif-cn-fonts | Adobe 思源宋体，Adobe 推出的支持中文的开源字体**非常好看的中文字体,显示中文时使用** |      |
-| noto-fonts-cjk                  | Noto CJK 字体，包含了支持中日韩文字的字体                    |      |
-| noto-fonts-emoji                | Noto Emoji 字体，包含了丰富的 Emoji 表情符号                 |      |
-| noto-fonts-extra                | Noto Extra 字体，Noto 字体家族的额外拓展字体                 |      |
-| ttf-nerd-fonts-symbols          | Nerd Fonts 符号字体，一套专为开发者设计的符号字体集合**waybar上的字符图标都是来自这里** |      |
-| ttf-dejavu                      | DejaVu 字体，包含了多种语言字符的开源字体,**主要用来显示alacrittyo终端上的英文字体**,很好看 |      |
-| terminus-font                   | 一个等宽字体，**适合作为终端字体, 就是纯无图形界面的终端**   |      |
-
-### 1. 窗口管理器
-| 包名         | 作用                       | 备注 |
-| ------------ | -------------------------- | ---- |
-| hyprland-git | 窗口管理器                 |      |
-| alacritty    | 终端                       |      |
-| rofi         | 应用菜单栏                 |      |
-| swaybg       | Wayland 组合器的壁纸显示器 |      |
-| waybar       | hyprland 状态栏            |      |
-
-### 2. 输入法
-
-| 包名                  | 作用                                                         | 备注 |
-| --------------------- | ------------------------------------------------------------ | ---- |
-| fcitx5-im             | 灵活的输入法框架，适用于类 Unix 系统                         |      |
-| fcitx5-chinese-addons | Fcitx5 输入法框架的中文附加组件                              |      |
-| fcitx5-material-color | Fcitx5 输入法框架的 Material Design 风格皮肤, 评价:其中blue是arch的fcitx5中最好看的皮肤(个人感受) |      |
-| fcitx5-pinyin-zhwiki  | Fcitx5 输入法框架的拼音输入法中文词库                        |      |
-
-### 3. 驱动
-| 包名                | 作用                                 | 备注 |
-| ------------------- | ------------------------------------ | ---- |
-| xf86-video-nouveau  | 适用于 Nvidia 显卡的开源 3D 加速驱动 |      |
-| mesa                | OpenGL 规范的开源实现 Nvidia驱动     |      |
-| xf86-input-libinput | libinput 的 X.Org 输入驱动           |      |
-| libinput            | 输入设备管理和事件处理库             |      |
-
-### 4. 声音
-| 包名          | 作用                                                         | 备注 |
-| ------------- | ------------------------------------------------------------ | ---- |
-| pamixer       | 命令行音频控制器                                             |      |
-| playerctl/    | 命令行控制媒体播放器的程序,**用来控制音乐播放的,可以不安装** |      |
-| pulseaudio    | 音频系统                                                     |      |
-| alsa-utils    | Advanced Linux Sound Architecture 工具                       |      |
-| alsa-firmware | ALSA 驱动所需的固件资源                                      |      |
-| sof-firmware  | Sound Open Firmware 固件                                     |      |
-| alsa-ucm-conf | ALSA UCM 配置文件                                            |      |
-
-### 5. 工具
-| 包名                   | 作用                               | 备注 |
-| ---------------------- | ---------------------------------- | ---- |
-| bluez                  | 蓝牙协议栈                         |      |
-| bluez-utils            | 蓝牙协议栈的实用程序               |      |
-| brightnessctl          | 用于 Linux 的亮度控制命令行工具    |      |
-| acpi                   | 显示电池状态和电源适配器信息的命令 |      |
-| paru                   | AUR 辅助工具                       |      |
-| udisks2                | 挂载移动存储设备的工具             |      |
-| network-manager-applet | 管理网络连接的系统托盘图标         |      |
-| google-chrome          | Google Chrome 浏览器               |      |
-
-
-
-
-### list
-
-1. hyprland-git
-2. alacritty
-3. rofi
-4. xorg-xrdb 
-5. swaybg
-6. waybar
-7. fcitx5-im 
-8. fcitx5-chinese-addons
-9. fcitx5-material-color
-10. fcitx5-pinyin-zhwiki
-11. xf86-video-nouveau
-12. mesa
-13. xf86-input-libinput
-14. libinput
-15. pamixer
-16. playerctl
-17. pulseaudio
-18. alsa-utils
-19. alsa-firmware
-20. sof-firmware
-21. alsa-ucm-conf
-22. udev
-23. bluez bluez-utils
-24. brightnessctl
-25. acpi
-26. paru
-27. udisks2
-28. network-manager-applet
-29. chromium
-30. google-chrome
-31. discord
-32. telegram-desktop
-33. ranger
-34. code
-35. v2raya
-36. wps-office-cn 
-37. ttf-wps-fonts 
-38. wps-office-mui-zh-cn
-39. vmware-workstation
-40. pycharm-community-edition
-41. wqy-zenhei
-42. adobe-source-han-serif-cn-fonts
-43. noto-fonts-cjk
-44. noto-fonts-emoji
-45. noto-fonts-extra
-46. ttf-nerd-fonts-symbols
-47. ttf-dejavu
-48. terminus-font
+| 快捷键 | 功能描述 |
+|--------|----------|
+| SUPER + Enter | 打开终端 (Alacritty) |
+| SUPER + SHIFT + Enter | 以 root 权限打开终端 |
+| SUPER + Q | 关闭当前活动窗口 |
+| SUPER + E | 打开文件管理器 (Yazi) |
+| SUPER + Space | 切换窗口浮动状态 |
+| SUPER + C | 打开浏览器 (Chrome) |
+| SUPER + V | 打开 VSCode |
+| SUPER + D | 打开应用启动器 (Rofi) |
+| SUPER + T | 打开 Typora |
+| SUPER + i | 显示 IP 信息 |
+| SUPER + SHIFT + i | 显示 IP 信息并复制 |
+| SUPER + F | 全屏当前窗口 |
+| SUPER + P | 打开系统监控 (btop) |
+| SUPER + SHIFT + P | 屏幕取色并复制到剪贴板 |
+| SUPER + B | 切换 Waybar 显示状态 |
+| SUPER + SHIFT + B | 切换壁纸 |
+| SUPER + CONTROL + SHIFT + B | 切换动态壁纸 |
+| SUPER + SHIFT + Q | 退出 Hyprland |
+| SUPER + SHIFT + D | 锁屏 |
+| SUPER + SHIFT + u | 更新 dotfiles 配置 |
+| SUPER + SHIFT + r | 重新加载 Hyprland 配置 |
+| SUPER + SHIFT + i | 打开系统监控 (bpytop) |
+| SUPER + S | 切换特殊工作区 |
+| SUPER + SHIFT + S | 移动窗口到特殊工作区 |
+| CONTROL + ALT + A | 截屏 |
+| SUPER + CONTROL + SHIFT + S | 关机 |
+| SUPER + CONTROL + SHIFT + R | 重启 |
+| XF86MonBrightnessUp | 增加屏幕亮度 |
+| XF86MonBrightnessDown | 减少屏幕亮度 |
+| XF86AudioRaiseVolume | 增加音量 |
+| XF86AudioLowerVolume | 减少音量 |
+| XF86AudioMicMute | 麦克风静音切换 |
+| XF86AudioMute | 系统静音切换 |
+| XF86AudioPlay | 播放/暂停媒体 |
+| XF86AudioPause | 播放/暂停媒体 |
+| XF86AudioNext | 播放下一曲 |
+| XF86AudioPrev | 播放上一曲 |
+| SUPER + ← | 向左移动焦点 |
+| SUPER + → | 向右移动焦点 |
+| SUPER + ↑ | 向上移动焦点 |
+| SUPER + ↓ | 向下移动焦点 |
+| SUPER + 1 | 切换到工作区 1 |
+| SUPER + 2 | 切换到工作区 2 |
+| SUPER + 3 | 切换到工作区 3 |
+| SUPER + 4 | 切换到工作区 4 |
+| SUPER + 5 | 切换到工作区 5 |
+| SUPER + 6 | 切换到工作区 6 |
+| SUPER + 7 | 切换到工作区 7 |
+| SUPER + 8 | 切换到工作区 8 |
+| SUPER + 9 | 切换到工作区 9 |
+| SUPER + 0 | 切换到工作区 10 |
+| SUPER + SHIFT + 1 | 移动窗口到工作区 1 |
+| SUPER + SHIFT + 2 | 移动窗口到工作区 2 |
+| SUPER + SHIFT + 3 | 移动窗口到工作区 3 |
+| SUPER + SHIFT + 4 | 移动窗口到工作区 4 |
+| SUPER + SHIFT + 5 | 移动窗口到工作区 5 |
+| SUPER + SHIFT + 6 | 移动窗口到工作区 6 |
+| SUPER + SHIFT + 7 | 移动窗口到工作区 7 |
+| SUPER + SHIFT + 8 | 移动窗口到工作区 8 |
+| SUPER + SHIFT + 9 | 移动窗口到工作区 9 |
+| SUPER + SHIFT + 0 | 移动窗口到工作区 10 |
+| SUPER + 鼠标滚轮下 | 切换到下一个工作区 |
+| SUPER + 鼠标滚轮上 | 切换到上一个工作区 |
+| SUPER + 鼠标左键拖动 | 移动窗口 |
+| SUPER + 鼠标右键拖动 | 调整窗口大小 |
+| SUPER + SHIFT + → | 增加窗口宽度 |
+| SUPER + SHIFT + ← | 减少窗口宽度 |
+| SUPER + SHIFT + ↑ | 减少窗口高度 |
+| SUPER + SHIFT + ↓ | 增加窗口高度 |
