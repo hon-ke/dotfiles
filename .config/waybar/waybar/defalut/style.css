@@ -1,0 +1,367 @@
+=@define-color gray #24283b;
+@define-color light_gray #373B41;
+
+@define-color black #222222;
+@define-color white #ffffff;
+@define-color blue #7aa2f7;
+@define-color green #bbffb9;
+@define-color red #f7768e;
+@define-color orange #ff9e64;
+@define-color yellow #e0af68;
+@define-color pink #bb9af7;
+@define-color syan #01ffff;
+
+@define-color disabled #707880;
+@define-color theme #9999ff;
+
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    font-family: "DejaVu Sans Mono";
+    font-size: 16px;
+}
+
+/* =================================== */
+/* waybar整体样式 */
+/* =================================== */
+window#waybar {
+    /* background-color: rgba(55, 59, 65, 0.500); */
+    background-color: @gray;
+    /* background-color: transparent; */
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    border-radius: 6px;
+}
+
+window#waybar.hidden {
+    opacity: 0.5;
+}
+
+#custom-logo {
+    border-radius: 6px;
+    background-color: @gray;
+    padding: 0 4px;
+    font-size: 20px;
+    margin-right: 6px;
+    color: #f7768e;
+}
+
+
+/* =================================== */
+/* 工作区域tag */
+/* =================================== */
+#workspaces {
+    padding: 0 9px;
+    border-radius: 6px;
+    /* background-color: @gray; */
+}
+
+
+
+#workspaces button {
+    all: initial;
+    /* Remove GTK theme values (waybar #1351) */
+    padding: 9px;
+    border-bottom: 3px solid transparent;
+}
+
+/* 每个窗口当有内容时tag的颜色 */
+#workspaces button:nth-child(1) {
+    color:  #7aa2f7;
+}
+
+#workspaces button:nth-child(2) {
+    color: #bb9af7;
+}
+
+#workspaces button:nth-child(3) {
+    color: #f7768e;
+}
+
+#workspaces button:nth-child(4) {
+    color: #bbffb9;
+}
+
+#workspaces button:nth-child(5) {
+    color: #e0af68;
+}
+
+#workspaces button:nth-child(6) {
+    color: #01ffff;
+}
+
+#workspaces button:nth-child(7) {
+    color: #ff9e64;
+}
+
+#workspaces button:nth-child(8) {
+    color: #ffffff;
+
+}
+
+#workspaces button:nth-child(9) {
+    color: #ffffff;
+
+}
+
+#workspaces button:nth-child(10) {
+    color: #ffffff;
+
+}
+
+/* 当前窗口tag样式 */
+#workspaces button.active {
+    background-color: #373B41;
+}
+
+#workspaces button.active:nth-child(1) {
+    border-bottom: 3px solid  #7aa2f7;
+}
+
+#workspaces button.active:nth-child(2) {
+    border-bottom: 3px solid #bb9af7;
+
+}
+
+#workspaces button.active:nth-child(3) {
+    border-bottom: 3px solid #f7768e;
+}
+
+#workspaces button.active:nth-child(4) {
+    border-bottom: 3px solid #bbffb9;
+}
+
+#workspaces button.active:nth-child(5) {
+    border-bottom: 3px solid #e0af68;
+}
+
+#workspaces button.active:nth-child(6) {
+    border-bottom: 3px solid #01ffff;
+}
+
+#workspaces button.active:nth-child(7) {
+    border-bottom: 3px solid #ff9e64;
+
+}
+
+#workspaces button.active:nth-child(8) {
+    border-bottom: 3px solid #ffffff;
+
+}
+
+#workspaces button.active:nth-child(9) {
+    border-bottom: 3px solid #ffffff;
+
+}
+
+#workspaces button.active:nth-child(10) {
+    border-bottom: 3px solid #ffffff;
+
+}
+
+/* 鼠标选择时候的样式 */
+#workspaces button:hover {
+    background-color: #373B41;
+    border-bottom: 3px solid #707880;
+
+}
+
+#workspaces button.empty.active {
+    color: #707880;
+    border-bottom: 3px solid #707880;
+
+}
+
+/* 空tag的样式 */
+#workspaces button.empty {
+    color: #707880;
+}
+
+/* 空tag的样式 */
+
+
+/* 有新提示内容的tag */
+#workspaces button.urgent {
+    background-color: #373B41;
+    color: #f7768e;
+    border-bottom: 3px solid #f7768e;
+}
+
+/* =================================== */
+/* 时间 */
+/* =================================== */
+
+#user,
+#clock {
+    background-color: @gray;
+    color: #9999ff;
+    padding: 0px 12px;
+
+}
+
+#clock {
+    /* border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px; */
+    border-radius: 6px;
+}
+
+#user {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+
+
+
+/* =================================== */
+/* 工作区域tag */
+/* =================================== */
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#backlight,
+#battery,
+#tray,
+#custom-ip,
+#custom-power {
+    border-radius: 6px;
+    /* margin: 0px 3px; */
+    padding: 0px 12px;
+    color: @gray;
+    margin-left: 6px;
+    /* min-width: auto; */
+    background-color: @gray;
+
+}
+
+
+
+#cpu {
+    /* background-color: #fab387; */
+    color:  #7aa2f7;
+}
+
+#memory {
+    color: #bbffb9;
+    /* background-color: #fab387; */
+}
+
+
+#battery {
+    /* background-color: #f38ba8; */
+    color: #9999ff;
+}
+
+
+#backlight {
+    /* background-color: #fab387; */
+    color: #e0af68;
+}
+
+#pulseaudio {
+    /* background-color: #f9e2af; */
+    color: #ff9e64;
+
+}
+
+#network {
+    /* background-color: #94e2d5; */
+    color: #94e2d5;
+    padding-right: 17px;
+}
+
+
+
+#tray {
+    border-radius: 6px;
+    background-color: @gray ;
+    padding-left: 9px;
+}
+
+
+#custom-power {
+    /* background-color: #f2cdcd; */
+    color: #f7768e;
+    background-color: @gray;
+    padding-right: 9px;
+    border-radius: 0px 6px 6px 0px;
+}
+
+#custom-ip {
+    color: #cba6f7;
+}
+
+tooltip {
+    border-radius: 8px;
+    padding: 15px;
+    background-color: @gray;
+    color: #ffffff;
+    border: 2px solid #f7768e ;
+}
+
+
+
+tooltip label {
+    padding: 5px;
+    background-color: #131822;
+    background-color: @gray;
+    color: #ffffff;
+}
+
+#backlight-slider {
+    background-color: @gray;
+    margin-left: 6px;
+    border-radius: 6px;
+}
+
+
+#backlight-slider slider {
+    /* 滑块本身 */
+    min-height: 8px;
+    min-width: 2px;
+    /* border-radius: 50%; 圆形滑块 */
+    background-color: #ffffff;
+    /* 滑块颜色 */
+    border: 2px solid #cccccc;
+    /* 滑块边框 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 阴影效果 */
+    opacity: 1;
+    /* 确保滑块可见 */
+}
+
+#backlight-slider trough {
+    /* 滑槽（背景） */
+    min-height: 8px;
+    min-width: 100px;
+    /* 滑槽宽度 */
+    border-radius: 4px;
+    /* 圆角 */
+    background-color: #373B41;
+    ;
+    /* 滑槽背景色 */
+}
+
+#backlight-slider highlight {
+    /* 滑槽填充部分（已滑动部分） */
+    min-height: 4px;
+    border-radius: 4px;
+    /* 圆角 */
+    background-color: #fff;
+    /* 填充颜色 */
+}
+
+
+#cava {
+    background-color: @gray;
+
+    margin-left: 6px;
+    border-radius: 6px;
+    padding: 0px 12px;
+
+    color: #ffffff;
+
+}

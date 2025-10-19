@@ -1,0 +1,30 @@
+#workspaces {
+  background-color: #3b4252;
+  font-size: 20px;
+  border-radius: 6px;
+  padding: 4px 6px;
+  margin: 8px;
+  margin-left: 0;
+}
+
+#workspaces button {
+  padding: 4px;
+}
+
+#workspaces button.active{
+  color: #f7768e;
+}
+#workspaces button.urgent {
+  color: #fa9f8e;
+}
+
+#workspaces button.empty {
+  color: #85909e;
+}
+
+#workspaces button.active:hover,
+#workspaces button.urgent:hover,
+#workspaces button.empty:hover {
+  color: #f7768e;
+  background: transparent;
+}
