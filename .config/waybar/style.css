@@ -1,5 +1,8 @@
-@import "workspace.css";
-/* @import "normal-workspace.css"; */
+/* 彩色*/
+/* @import "workspace.css"; */
+
+/* 简约*/
+@import "simple-workspace.css";
 
 * {
   all: unset;
@@ -10,17 +13,17 @@
 
 #waybar {
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: 4px;
   /* border:2px solid #3b4252; */
 }
 
 .modules-left {
   /* background-color: #222436; */
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .modules-right {
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .modules-center {
@@ -43,20 +46,18 @@
 }
 
 #tools {
-  background-color: #24283b;
-  border-radius: 8px;
-  padding: 0px 8px;
+  background-color: #222436;
+  border-radius: 4px;
+  padding: 4px 6px;
   margin:5px;
 }
 
-#tools * {
-  padding: 0px 4px;
-}
+#tools * {}
 
 #battery {
   font-size: 17px;
   padding-right: 5px;
-  color: #69ff94;
+  color: #00FF7F;
 }
 
 #battery.warning {
@@ -74,7 +75,7 @@
 
 #backlight,
 #pulseaudio {
-  font-size: 20px;
+  font-size: 18px;
   border-radius: 6px;
   color: #7aa2f7;
   padding: 0 5px;

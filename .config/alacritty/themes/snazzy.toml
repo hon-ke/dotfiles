@@ -21,7 +21,4 @@ yellow = "0xf3f99d"
 [colors.primary]
 # background = "0x282a36"
 background = "0x222436"
-
-#222436
-
 foreground = "0xeff0eb"

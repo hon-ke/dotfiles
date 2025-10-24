@@ -4,7 +4,7 @@
 FONT_DIR="/usr/share/figlet/fonts"
 
 # 默认文本
-DEFAULT_TEXT="honker"
+DEFAULT_TEXT="Worker"
 
 # 检查字体目录是否存在
 if [ ! -d "$FONT_DIR" ]; then
