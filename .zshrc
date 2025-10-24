@@ -123,18 +123,30 @@ export VENV="$HOME/.venv"
 export SELF="$HOME/.config/self"
 export PATH="$PATH:$HOME/.config/self/bin"
 
-# system
-# alias ls='ls --color=auto'
-# alias la='ls -la --color=auto'
-# alias ll='ls -l --color=auto'
-alias nvim="$SELF/script/nvim-nopadding.sh"
-alias vim="$SELF/script/nvim-nopadding.sh"
-alias vi="$SELF/script/nvim-nopadding.sh"
-alias v="$SELF/script/nvim-nopadding.sh"
-alias nv="$SELF/script/nvim-nopadding.sh"
-alias es='eza --icons'
-alias ea='eza -la --icons'
-alias el='eza -ll --icons'
+# 查看是否存在eza,检测并设置别名
+if command -v eza &> /dev/null; then
+    alias ls='eza --icons'
+    alias la='eza -la --icons'
+    alias ll='eza -ll --icons'
+    alias lt='eza --tree --icons'
+else
+    alias ls='ls --color=auto'
+    alias la='ls -la --color=auto'
+    alias ll='ls -l --color=auto'
+fi
+
+# 设置编辑器命令
+if command -v nvim &> /dev/null && [ -f "$SELF/script/nvim-nopadding.sh" ]; then
+    NVIM_CMD="$SELF/script/nvim-nopadding.sh"
+elif command -v nvim &> /dev/null; then
+    NVIM_CMD="nvim"
+else
+    NVIM_CMD="vim"
+fi
+
+alias nvim="$NVIM_CMD"
+alias vim="$NVIM_CMD"
+
 alias grep='grep --color=auto'
 alias gdd='cd ~/Downloads'
 alias ddd='cd $DOTFILES'
