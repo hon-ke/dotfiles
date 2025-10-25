@@ -13,7 +13,7 @@ hyprctl hyprpaper unload all
 # 随机选择一张壁纸（跳过无效文件）
 while true; do
     wallpaper=$(find "$BG_PATH" -type f \( -name "*.jpg" -o -name "*.png" \) | shuf -n 1)
-    
+
     # 检查文件有效性（通过文件头识别真实格式）
     if file -b --mime-type "$wallpaper" | grep -qE 'image/(jpeg|png)'; then
         echo "[Hyprpaper] 切换壁纸: $wallpaper"
@@ -32,6 +32,7 @@ if [ -n "$wallpaper" ]; then
     if ! hyprctl hyprpaper preload "$wallpaper" 2>&1 | grep -q "error"; then
         # 设置壁纸
         hyprctl hyprpaper wallpaper ",$wallpaper"
+        exprort $BG = $wallpaper
     else
         echo "[错误] 加载失败，请检查文件: $wallpaper"
     fi

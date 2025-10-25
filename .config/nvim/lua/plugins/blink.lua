@@ -4,10 +4,10 @@ return {
   dependencies = {
     "rafamadriz/friendly-snippets",
     "L3MON4D3/LuaSnip",
-    "nvim-tree/nvim-web-devicons", -- 确保图标依赖存在:cite[6]
-    "onsails/lspkind.nvim", -- 确保图标类别依赖存在
+    "nvim-tree/nvim-web-devicons",
+    "onsails/lspkind.nvim",
   },
-  event = "InsertEnter", -- 更稳妥的加载时机
+  event = "InsertEnter",
   opts = {
     completion = {
       menu = {
@@ -20,7 +20,6 @@ return {
               ellipsis = false,
               text = function(ctx)
                 local icon = ctx.kind_icon
-                -- 安全地检查 source_name
                 if ctx.source_name and vim.tbl_contains({ "Path" }, ctx.source_name) then
                   local ok, devicons = pcall(require, "nvim-web-devicons")
                   if ok then
@@ -53,8 +52,6 @@ return {
                 return hl
               end,
             },
-            -- 移除了 colorful-menu 相关的 label 组件自定义
-            -- 使用 blink.cmp 默认的 label 渲染
           },
         },
       },
@@ -71,69 +68,16 @@ return {
     },
     sources = {
       default = { "path", "snippets", "buffer", "lsp" },
-      snippets = {
-        priority = 1000,
-        max_items = 10,
-      },
-      lsp = {
-        priority = 900,
-      },
+      -- 移除 sources 下的 snippets 配置块
     },
-    snippet = {
-      expand = function(args)
-        local ok, luasnip = pcall(require, "luasnip")
-        if ok then
-          luasnip.lsp_expand(args.body)
-        end
-      end,
-    },
-    matching = {
-      fuzzy = true,
-      exact = true,
-      case_sensitive = false,
-    },
-    sorting = {
-      comparators = {
-        -- 使用安全的 require 方式
-        function(...)
-          local ok, comparators = pcall(require, "blink.cmp.completion.comparators")
-          if ok then
-            return comparators.score(...)
-          end
-          return nil
-        end,
-        function(...)
-          local ok, comparators = pcall(require, "blink.cmp.completion.comparators")
-          if ok then
-            return comparators.recently_used(...)
-          end
-          return nil
-        end,
-        function(...)
-          local ok, comparators = pcall(require, "blink.cmp.completion.comparators")
-          if ok then
-            return comparators.kind(...)
-          end
-          return nil
-        end,
-        function(...)
-          local ok, comparators = pcall(require, "blink.cmp.completion.comparators")
-          if ok then
-            return comparators.length(...)
-          end
-          return nil
-        end,
-      },
-    },
+    -- 移除已废弃的 snippet、matching 和 sorting 配置块
   },
   config = function(_, opts)
     -- 先设置 LuaSnip
     local ok_luasnip, luasnip = pcall(require, "luasnip")
     if ok_luasnip then
-      -- 加载 friendly-snippets
       require("luasnip.loaders.from_vscode").lazy_load()
 
-      -- 设置 snippet 键映射
       vim.keymap.set({"i", "s"}, "<C-l>", function()
         if luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()

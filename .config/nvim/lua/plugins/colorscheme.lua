@@ -97,7 +97,7 @@ return {
 					["bufferline.nvim"] = true,
 				},
 			})
-			-- vim.cmd.colorscheme("dracula")
+			vim.cmd.colorscheme("dracula")
 			-- vim.cmd.colorscheme("dracula-soft")
 		end,
 	},
@@ -179,7 +179,7 @@ return {
 			})
 
 			-- setup must be called before loading
-			vim.cmd.colorscheme("catppuccin")
+			-- vim.cmd.colorscheme("catppuccin")
 		end,
 	},
 }

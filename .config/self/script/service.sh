@@ -2,7 +2,6 @@
 
 # 获取脚本名称和进程ID文件路径
 SCRIPT_NAME=$(basename "$0")
-SERVICE_DIR=$HOME/dy/
 PID_FILE="/tmp/${SCRIPT_NAME}.pids"
 
 # 函数：发送桌面通知
@@ -34,20 +33,20 @@ kill_previous_processes() {
 start_services() {
     # 杀死之前的进程
     kill_previous_processes
-
+    
     # 启动后端服务并保存PID
-    alacritty -e bash -c "cd $SERVICE_DIR/back && $HOME/.venv/bin/python main.py; exec bash" &
+    alacritty -e bash -c "cd $HOME/dy/back && $HOME/.venv/bin/python main.py; exec bash" &
     BACK_PID=$!
     echo $BACK_PID >> "$PID_FILE"
-
+    
     # 启动前端服务并保存PID
-    alacritty -e bash -c "cd $SERVICE_DIR/front && yarn serve; exec bash" &
+    alacritty -e bash -c "cd $HOME/dy/front && yarn serve; exec bash" &
     FRONT_PID=$!
     echo $FRONT_PID >> "$PID_FILE"
-
+    
     # 等待一会儿确保服务启动
     sleep 2
-
+    
     # 检查进程是否仍在运行
     if kill -0 $BACK_PID 2>/dev/null && kill -0 $FRONT_PID 2>/dev/null; then
         notify "服务管理" "服务已成功启动"

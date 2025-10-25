@@ -3,8 +3,8 @@
 # 初始化规则数组
 rules=(
     "dir:$HOME/.config/self/script"
-    #"desktop:/usr/share/applications"
-    #"desktop:$HOME/.local/share/applications"
+    "desktop:/usr/share/applications"
+    "desktop:$HOME/.local/share/applications"
 )
 
 # 样式配置

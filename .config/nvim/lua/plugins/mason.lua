@@ -16,12 +16,13 @@ return {
       ["pyright"] = "pyright",
       ["html-lsp"] = "html",
       ["css-lsp"] = "cssls",
-      ["emmet-ls"] = "emmet_ls"
+      ["emmet-ls"] = "emmet_ls",
+      ["marksman"] = "marksman"  -- 添加 Markdown LSP
     }
 
     local capabilities = require("blink.cmp").get_lsp_capabilities()
     local on_attach = function(client, bufnr)
-      -- 禁用格式化功能，可以留给如Null-ls或EFM之类的专用插件:cite[10]
+      -- 禁用格式化功能，可以留给如Null-ls或EFM之类的专用插件
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
       -- 您可以在这里添加其他的按键映射或LSP附加设置
@@ -43,10 +44,10 @@ return {
         on_attach = on_attach,
       }, config or {})
 
-      -- 使用新的 vim.lsp.config API 启动服务器:cite[1]:cite[5]
+      -- 使用新的 vim.lsp.config API 启动服务器
       if lsp_server_name then
         vim.lsp.config(lsp_server_name, final_config)
-        -- 显式启用服务器:cite[5]
+        -- 显式启用服务器
         vim.lsp.enable(lsp_server_name)
       else
         vim.notify("LSP配置 '" .. mason_package_name .. "' 未找到映射关系。", vim.log.levels.WARN)
@@ -81,6 +82,9 @@ return {
     setup("html-lsp", {})
     setup("css-lsp", {})
     setup("emmet-ls", {})
+
+    -- 添加 Markdown LSP 配置
+    setup("marksman", {})
 
     -- 全局诊断配置
     vim.diagnostic.config({

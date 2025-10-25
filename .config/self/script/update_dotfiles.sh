@@ -17,7 +17,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # 重置颜色
 
 # 日志文件设置（仅在错误时创建）
-LOG_FILE="${HOME}/backup_script_$(date +%Y%m%d_%H%M%S).log"
+LOG_FILE="${HOME}/backup_script.log"
 LOG_CONTENT=""  # 用于累积错误信息
 
 # 源目录 (用户配置目录)
@@ -42,7 +42,7 @@ BACKUP_FILES=(
     "pip"           # pip源
     "kitty"         # kitty源
     "niri"         # kitty源
-    # "fish"          # fish
+    "fish"          # fish
 )
 
 # 执行任务列表（用户可以自定义添加/删除）
@@ -95,10 +95,10 @@ copy_grub_theme() {
 
 # 在任务命令中使用
 declare -A task_commands
-task_commands["复制.zshrc文件"]="cp -rf $HOME/.zshrc $DOTFILE_DIR/"
+# task_commands["复制.zshrc文件"]="cp -rf $HOME/.zshrc $DOTFILE_DIR/"
 # task_commands["复制pacman.config"]="sudo cp /etc/pacman.conf $DOTFILE_DIR/"
 task_commands["复制grub主题"]="copy_grub_theme"
-task_commands["复制oh-my-zsh主题"]="cp $HOME/.oh-my-zsh/themes/nicoulaj.zsh-theme $CONFIF_DIR/"
+# task_commands["复制oh-my-zsh主题"]="cp $HOME/.oh-my-zsh/themes/nicoulaj.zsh-theme $CONFIF_DIR/"
 # task_commands["更改权限"]=""
 
 # 添加错误日志函数（简化格式）
