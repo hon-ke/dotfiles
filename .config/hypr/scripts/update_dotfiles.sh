@@ -44,6 +44,7 @@ BACKUP_FILES=(
     "kitty"         # kitty源
     "niri"         # kitty源
     "fish"          # fish
+    "swaylock"      # swaylock
 )
 
 # 执行任务列表（用户可以自定义添加/删除）
