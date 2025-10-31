@@ -152,7 +152,7 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{icon}",
-        "format-alt": "{icon} <span class='brightness-number'>{percent}</span>",
+        "format-alt": "{icon} {percent}",
         "tooltip-format": "{icon} {percent}%",
         "format-icons": [
             "󰈸"

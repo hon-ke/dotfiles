@@ -7,6 +7,7 @@ end
 set -U fish_greeting ""
 
 # 环境变量
+set -Ux GIT_CONFIG_GLOBAL "$HOME/.config/git/config"
 set -gx EDITOR nvim
 set -gx BG_PATH /data/bg/img
 set -gx DOTFILES /data/dotfiles
@@ -28,8 +29,10 @@ else
 end
 
 # 设置编辑器命令
-if command -q nvim && test -f "$SELF/script/nvim-nopadding.sh"
-    set NVIM_CMD "$SELF/script/nvim-nopadding.sh"
+if command -q nvim && test -f "$HOME/.config/self/script/nvim-nopadding.sh"
+    # Fish 使用 command -q 来检查命令是否存在
+    # && 用于逻辑与操作
+    set NVIM_CMD "$HOME/.config/self/script/nvim-nopadding.sh"
 else if command -q nvim
     set NVIM_CMD "nvim"
 else
@@ -38,17 +41,29 @@ end
 
 alias nvim="$NVIM_CMD"
 alias vim="$NVIM_CMD"
+alias nv="$NVIM_CMD"
 
 alias grep='grep --color=auto'
 alias gdd='cd ~/Downloads'
 alias ddd='cd $DOTFILES'
 alias ccc='cd $HOME/.config'
+
+alias gi="git init"
+alias gs="git status"
+alias syy="sudo pacman -Syy"
+alias syu="sudo pacman -Syu"
+
 alias y="yazi"
-alias h="Hyprland"
+alias h="Hyprland > .hypr.log"
 alias o="xdg-open"
 alias q="sudo pacman -Rns (pacman -Qdtq)"
-alias active="source $HOME/.venv/bin/activate"
-alias pyy="sudo pacman -Syy"
-alias pyu="sudo pacman -Syu"
-# 其他工具
-# pokemon-colorscripts -r -s --no-title 2>/dev/null; or true
+
+# 重新加载 Fish 配置
+function rsf
+    source "$HOME/.config/fish/config.fish"
+end
+
+# 激活虚拟环境
+function active
+    bash -c "source $HOME/.venv/bin/activate; exec fish"
+end

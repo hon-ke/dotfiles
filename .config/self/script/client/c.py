@@ -1,4 +1,5 @@
 #!/home/clay/.venv/bin/python
+
 from remote import RemotePostAPI, RemoteFileAPI, RemotePageAPI, RemoteRootAPI, AuthAPI
 from typing import List, Union, Optional, Dict, Any, Tuple
 from local import DocsScanner, Post, Page, DocsMaker
@@ -15,6 +16,8 @@ import re
 class MainWorker:
 
     def __init__(self, base_url, api_key):
+        self.base_url = base_url
+        self.api_key = api_key
         self.config = {"base_url": base_url, "api_key": api_key}
         # api
         self.auth_api = AuthAPI(**self.config)
@@ -182,7 +185,6 @@ class MainWorker:
 
         item["content"] = content
         return item
-
     def _get_static_file(self, md_content: str, unique: bool = True) -> List[str]:
         """
         从 Markdown 内容中提取所有以 /static/ 开头的静态资源路径
@@ -194,18 +196,10 @@ class MainWorker:
         Returns:
             静态资源路径列表
         """
-        # 改进的正则表达式，正确处理带标题的情况
+        # 更宽松的正则表达式，匹配所有 /static/ 开头的路径
         patterns = [
-            # 图片: ![alt](/static/image.png) 或 ![alt](/static/image.png "title")
-            r"!\[.*?\]\(\s*(/static/[^)\s]+)(?:\s+[^)]*)?\s*\)",
-            # 链接: [text](/static/file.pdf) 或 [text](/static/file.pdf "title")
-            r"\[.*?\]\(\s*(/static/[^)\s]+)(?:\s+[^)]*)?\s*\)",
-            # HTML img 标签: <img src="/static/image.jpg">
-            r'<img[^>]*src=["\'](/static/[^"\']+)["\'][^>]*>',
-            # HTML a 标签: <a href="/static/file.pdf">
-            r'<a[^>]*href=["\'](/static/[^"\']+)["\'][^>]*>',
-            # 直接路径（可能被代码块排除）
-            r'(?<!`)(/static/[^\s<>"\'\)]+)',
+            # 匹配所有 /static/ 开头的路径，包含括号
+            r'/static/[^\s<>"\'\)]*(?:\([^)]*\))?[^\s<>"\'\)]*'
         ]
 
         resources = []
@@ -218,7 +212,11 @@ class MainWorker:
                 clean_path = clean_path.split('"')[0].strip()  # 移除标题文本
                 clean_path = unquote(clean_path)  # URL 解码
 
-                if clean_path and clean_path.startswith("/static/"):
+                # 进一步验证这确实是一个文件路径（包含文件名）
+                if (clean_path and
+                    clean_path.startswith("/static/") and
+                    '/' in clean_path[8:] and  # 确保有子路径
+                    '.' in clean_path.split('/')[-1]):  # 确保文件名中有点（可能是后缀）
                     resources.append(clean_path)
 
         # 去重处理
@@ -304,6 +302,17 @@ class MainWorker:
 
         else:  # show mode
             log.success("CONFLICT", "仅展示额外的内容", **show_data)
+
+    def showkey(self):
+        log.info(apikey=self.api_key)
+
+    def get_apikey(self, username, password):
+        result = self.auth_api.login(username, password)
+        log.info(**result)
+
+    def new_apikey(self, api_key):
+        result = self.auth_api.refresh_api_key(api_key)
+        log.info(**result)
 
     def clean(self):
         resp = self.file_api.clean_extra_files()
@@ -443,6 +452,12 @@ class SimpleCLI:
 
   # 创建模板文档
   python main.py template
+
+  # 获取API密钥（通过用户名密码登录）
+  python main.py get_apikey --username <用户名> --password <密码>
+
+  # 刷新API密钥
+  python main.py new_apikey
         """
 
     def _setup_commands(self):
@@ -464,6 +479,18 @@ class SimpleCLI:
             help="处理模式: show(仅显示), pull(拉取), delete(删除)",
         )
 
+        # get_apikey 命令
+        get_apikey_parser = subparsers.add_parser(
+            "getkey", help="通过用户名密码获取API密钥"
+        )
+        get_apikey_parser.add_argument("--username", required=True, help="用户名")
+        get_apikey_parser.add_argument("--password", required=True, help="密码")
+
+        # new_apikey 命令
+        new_key = subparsers.add_parser("newkey", help="刷新API密钥")
+        new_key.add_argument("--apikey", required=False, help="apikey")
+
+        subparsers.add_parser("show", help="查看信息")
         # 备份命令
         subparsers.add_parser("backup", help="备份远程数据")
 
@@ -499,10 +526,19 @@ class SimpleCLI:
 
         if not args.command:
             self.log.debug("文档同步cli - 输入命令查看帮助")
+            config = {
+                "base_url": self.base_url,
+                "api_key": self.api_key,
+                "docs_path": self.docs_path,
+                "backup_all": self.backup_path,
+                "conflict_mode": self.conflict_mode,
+            }
+            self.log.info(**config)
             return 0
 
         try:
             worker = MainWorker(self.base_url, self.api_key)
+
             offline = ["example", "template"]
 
             # 简化的命令执行逻辑
@@ -526,6 +562,8 @@ class SimpleCLI:
             elif args.command == "clean":
                 worker.clean()
 
+            elif args.command == "show":
+                worker.showkey()
             elif args.command == "clear":
                 if input("\033[93m确认清空远程所有内容? (y/N): ").lower() in [
                     "y",
@@ -552,6 +590,26 @@ class SimpleCLI:
             elif args.command == "template":
                 worker.template_maker(self.docs_path)
 
+            elif args.command == "getkey":
+                # 通过用户名密码获取API密钥
+                username = getattr(args, "username", None)
+                password = getattr(args, "password", None)
+
+                if not username or not password:
+                    self.log.error("GET_APIKEY", "用户名和密码不能为空")
+                    return 1
+
+                api_key = worker.get_apikey(username, password)
+
+            elif args.command == "newkey":
+                api_key = getattr(args, "apikey", None)
+                if not api_key:
+                    api_key = self.api_key
+
+                print(api_key)
+                # 刷新API密钥
+                new_key = worker.new_apikey(api_key)
+
         except Exception as e:
             self.log.error(f"执行错误: {e}")
             return 1
@@ -569,7 +627,7 @@ if __name__ == "__main__":
     # 硬编码所有配置参数
     config = {
         "base_url": "http://hon-ker.cn",
-        "api_key": "123456",
+        "api_key": "1NqFB3pWLEiiBqOQBcu1yZxxz0nWkX5c2FI1zxmjs_U",
         "docs_path": "/home/clay/docs",  # 硬编码文档路径
         "backup_path": "/home/clay/backups",  # 硬编码备份路径
         "conflict_mode": "show",  # 硬编码冲突处理模式

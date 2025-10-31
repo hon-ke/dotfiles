@@ -29,6 +29,8 @@ CONFIF_DIR="${1:-$DOTFILE_DIR/.config}"
 
 # 需要备份的配置文件列表
 BACKUP_FILES=(
+    "self"          # 自定义配置
+
     "alacritty"     # Alacritty终端
     "cava"          # cava音乐音效效果
     "dunst"         # 通知管理
@@ -38,7 +40,6 @@ BACKUP_FILES=(
     "hypr"          # hyprland窗口管理器配置文件
     "waybar"        # 状态栏
     "rofi"          # rofi启动器
-    "self"          # 自定义配置
     "pip"           # pip源
     "kitty"         # kitty源
     "niri"         # kitty源
